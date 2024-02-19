@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\ParseJob;
 use App\Services\ExchangeService;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
