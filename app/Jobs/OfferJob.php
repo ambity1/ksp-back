@@ -8,6 +8,8 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class OfferJob implements ShouldQueue
 {
@@ -16,12 +18,10 @@ class OfferJob implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    private $id;
-    private $price;
-    public function __construct($id, $price)
+    private $filename;
+    public function __construct($filename)
     {
-        $this->id = $id;
-        $this->price = $price;
+        $this->filename = $filename;
     }
 
     /**
@@ -29,8 +29,19 @@ class OfferJob implements ShouldQueue
      */
     public function handle(): void
     {
-        Product::where('id_1с', $this->id)->update([
-            'price' => $this->price
-        ]);
+        $file = Storage::disk('local')->get($this->filename);
+        $xml = simplexml_load_string($file);
+        if (!$xml) {
+            Log::error('error syntax invalid xml file in offers');
+        }
+
+        if (isset($xml->ПакетПредложений)) {
+            foreach ($xml->ПакетПредложений->Предложения->Предложение as $product) {
+                Product::where('id_1с', $product->Ид)->update([
+                    'price' => $product->Цены->Цена->ЦенаЗаЕдиницу
+                ]);
+            }
+        }
+
     }
 }

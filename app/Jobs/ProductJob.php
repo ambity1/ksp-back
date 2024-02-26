@@ -8,6 +8,8 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class ProductJob implements ShouldQueue
 {
@@ -16,18 +18,11 @@ class ProductJob implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    private $id;
-    private $name;
-    private $articul;
-    private $barcode;
-    private $description;
-    public function __construct($id, $name, $articul,$barcode,$description)
+    private $filename;
+
+    public function __construct($filename)
     {
-        $this->id = $id;
-        $this->name = $name;
-        $this->articul = $articul;
-        $this->barcode = $barcode;
-        $this->description = $description;
+        $this->filename = $filename;
     }
 
     /**
@@ -35,16 +30,26 @@ class ProductJob implements ShouldQueue
      */
     public function handle(): void
     {
-        Product::updateOrCreate(
-            [
-                'id_1с' => $this->id
-            ],
-            [
-                'name' => $this->name,
-                'articul' => $this->articul,
-                'barcode' => $this->barcode,
-                'description' => $this->description
-            ]
-        );
+        $file = Storage::disk('local')->get($this->filename);
+        $xml = simplexml_load_string($file);
+        if (!$xml) {
+            Log::error('error syntax invalid xml file in products');
+        }
+
+        if (isset($xml->Каталог)) {
+            foreach ($xml->Каталог->Товары->Товар as $product) {
+                Product::updateOrCreate(
+                    [
+                        'id_1с' => $product->Ид
+                    ],
+                    [
+                        'name' => $product->Наименование,
+                        'articul' => $product->Артикул,
+                        'barcode' => $product->Штрихкод,
+                        'description' => $product->Описание
+                    ]
+                );
+            }
+        }
     }
 }
