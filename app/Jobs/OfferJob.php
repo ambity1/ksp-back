@@ -43,5 +43,6 @@ class OfferJob implements ShouldQueue
             }
         }
 
+        Storage::disk('local')->delete($this->filename);
     }
 }

@@ -51,5 +51,8 @@ class ProductJob implements ShouldQueue
                 );
             }
         }
+
+        Storage::disk('local')->delete($this->filename);
+
     }
 }
