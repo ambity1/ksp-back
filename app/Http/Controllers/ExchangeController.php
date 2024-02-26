@@ -24,6 +24,7 @@ class ExchangeController extends BaseController
     public function exchange(Request $request){
         $mode = $request->get('mode');
         Log::info('mode: ' .$mode);
+        ini_set('memory_limit', '256M');
 
         switch ($mode){
             case 'checkauth':
