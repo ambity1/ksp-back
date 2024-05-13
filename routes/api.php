@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExchangeController;
+use \App\Http\Controllers\ProductController;
 
 
 /*
@@ -21,3 +22,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::any('/1c_exchange', [ExchangeController::class, 'exchange']);
+
+Route::get('/product/{id}', [ProductController::class, 'getProductByID']);
+
+Route::get('/products/{typeSort}/{sort}/{limit}', [ProductController::class, 'getProducts']);
+
+Route::get('/products/filter/{typeSort}/{sort}/{limit}/{from}/{to}', [ProductController::class, 'getProductsFilterPrice']);
+
+Route::get('/products/w/p', [ProductController::class, 'getProductsWithoutPrice']);

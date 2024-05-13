@@ -35,7 +35,6 @@ class ProductJob implements ShouldQueue
         if (!$xml) {
             Log::error('error syntax invalid xml file in products');
         }
-
         if (isset($xml->Каталог)) {
             foreach ($xml->Каталог->Товары->Товар as $product) {
                 Product::updateOrCreate(
@@ -44,15 +43,14 @@ class ProductJob implements ShouldQueue
                     ],
                     [
                         'name' => $product->Наименование,
-                        'articul' => $product->Артикул,
+                        'articulate' => $product->Артикул,
                         'barcode' => $product->Штрихкод,
-                        'description' => $product->Описание
+                        'description' => $product->Описание,
+                        'state' => 'new'
                     ]
                 );
             }
         }
-
         Storage::disk('local')->delete($this->filename);
-
     }
 }

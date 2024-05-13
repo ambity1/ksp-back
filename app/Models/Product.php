@@ -8,7 +8,7 @@ class Product extends Model
 {
 
     protected $fillable = [
-        'name', 'articul', 'price', 'store', 'barcode', 'description', 'id_1с',
+        'name', 'articulate', 'price', 'barcode', 'description', 'id_1с', 'state'
     ];
     protected $timestamp = false;
 

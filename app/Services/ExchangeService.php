@@ -20,6 +20,5 @@ class ExchangeService
         } elseif ($filename == "offers0_1.xml"){
             OfferJob::dispatch($filename);
         }
-
     }
 }

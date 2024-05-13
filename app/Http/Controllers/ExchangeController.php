@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Jobs\ParseJob;
 use App\Services\ExchangeService;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
-$count = 0;
 class ExchangeController extends BaseController
 {
 
@@ -18,7 +16,6 @@ class ExchangeController extends BaseController
     public function __construct(ExchangeService $exchangeService)
     {
         $this->exchangeService=$exchangeService;
-
     }
 
     public function exchange(Request $request){
