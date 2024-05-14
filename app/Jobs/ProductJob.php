@@ -46,7 +46,6 @@ class ProductJob implements ShouldQueue
                         'articulate' => $product->Артикул,
                         'barcode' => $product->Штрихкод,
                         'description' => $product->Описание,
-                        'state' => 'new'
                     ]
                 );
             }

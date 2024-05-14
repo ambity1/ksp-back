@@ -3,12 +3,13 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ProductResource\Pages;
-use App\Filament\Resources\ProductResource\RelationManagers;
 use App\Models\Product;
 use Filament\Forms;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -23,16 +24,14 @@ class ProductResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')->label('Название')->required(),
-                Forms\Components\TextInput::make('articulate')->label('Артикуль')->required(),
+                TextInput::make('name')->label('Название')->required(),
+                TextInput::make('articulate')->label('Артикуль')->required(),
 
-                Forms\Components\TextInput::make('price')->label('Цена')->required(),
-                Forms\Components\TextInput::make('barcode')->label('Штрихкод')->required(),
+                TextInput::make('price')->label('Цена')->required(),
+                TextInput::make('barcode')->label('Штрихкод')->required(),
 
-                Forms\Components\TextInput::make('description')->label('Описание')->required(),
-                Forms\Components\TextInput::make('id_1с')->label('ID 1С')->required(),
-
-                Forms\Components\TextInput::make('state')->label('Состояние')->required(),
+                TextInput::make('description')->label('Описание')->required(),
+                TextInput::make('id_1с')->label('ID 1С')
             ]);
     }
 
@@ -40,7 +39,13 @@ class ProductResource extends Resource
     {
         return $table
             ->columns([
-                //
+                TextColumn::make('name')->label('Название'),
+                TextColumn::make('articulate')->label('Артикуль'),
+
+                TextColumn::make('price')->label('Цена'),
+                TextColumn::make('barcode')->label('Штрихкод'),
+
+                TextColumn::make('description')->label('Описание'),
             ])
             ->filters([
                 //
