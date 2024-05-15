@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\PromotionController;
+use App\Http\Controllers\RequestController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExchangeController;
@@ -29,4 +31,14 @@ Route::get('/products/{typeSort}/{sort}/{limit}', [ProductController::class, 'ge
 
 Route::get('/products/filter/{typeSort}/{sort}/{limit}/{from}/{to}', [ProductController::class, 'getProductsFilterPrice']);
 
-Route::get('/products/w/p', [ProductController::class, 'getProductsWithoutPrice']);
+//Route::get('/products/w/p', [ProductController::class, 'getProductsWithoutPrice']);
+
+Route::get('/products/random', [ProductController::class, 'getProductsRandom']);
+
+Route::get('/product/find/{name}', [ProductController::class, 'getProductsFind']);
+
+Route::get('/promotion/{id}', [PromotionController::class, 'getPromotionByID']);
+Route::get('/promotions', [PromotionController::class, 'getPromotions']);
+
+
+Route::post('/request', [RequestController::class, 'requestTG']);
