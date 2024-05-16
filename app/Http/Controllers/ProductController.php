@@ -16,39 +16,39 @@ class ProductController extends Controller
        return new ProductSingleResource(Product::findOrFail($id));
     }
 
-    public function getProducts(string $typeSort, string | null $sort, string $limit, Request $request)
+    public function getProducts(Request $request)
     {
         $products = Product::whereNotNull('price');
 
-        if ($request['name'] !== null) {
-            $products = $products->where('name', 'like', '%' . $name . '%');
+        if ($request['name']) {
+            $products = $products->where('name', 'like', '%' . $request['name'] . '%');
         }
-        if ($typeSort === 'reverse'){
+        if ($request['typeSort'] === 'reverse'){
             $products = $products
-                ->orderByDesc($sort);
-        } elseif ($typeSort === 'normal') {
+                ->orderByDesc($request['sort']);
+        } elseif ($request['typeSort'] === 'normal') {
             $products = $products
-                ->orderBy($sort);
+                ->orderBy($request['sort']);
         }
-        $products = $products->paginate($limit);
+        $products = $products->paginate($request['limit']);
         return ProductResource::collection($products);
     }
 
-    public function getProductsFilterPrice(string $typeSort, string | null $sort, string $limit, string $from, string $to, Request $request){
+    public function getProductsFilterPrice(Request $request){
 
         $products = Product::whereNotNull('price')
-            ->whereBetween('price', [$from, $to]);
-        if ($request['name'] !== null) {
-            $products = $products->where('name', 'like', '%' . $name . '%');
+            ->whereBetween('price', [$request['from'], $request['to']]);
+        if ($request['name']) {
+            $products = $products->where('name', 'like', '%' . $request['name'] . '%');
         }
-        if ($typeSort === 'reverse'){
+        if ($request['typeSort'] === 'reverse'){
             $products = $products
-                ->orderByDesc($sort);
-        } elseif ($typeSort === 'normal') {
+                ->orderByDesc($request['sort']);
+        } elseif ($request['typeSort'] === 'normal') {
             $products = $products
-                ->orderBy($sort);
+                ->orderBy($request['sort']);
         }
-        $products = $products->paginate($limit);
+        $products = $products->paginate($request['limit']);
         return ProductResource::collection($products);
     }
 
@@ -66,18 +66,18 @@ class ProductController extends Controller
         return ProductResource::collection($products);
     }
 
-    public function getProductsFind(string $name, string $typeSort, string | null $sort, string $limit, string $from, string $to)
-    {
-        $products = Product::where('name', 'like', '%' . $name . '%')->whereBetween('price', [$from, $to]);
-        if ($typeSort === 'reverse'){
-            $products = $products
-                ->orderByDesc($sort);
-        } elseif ($typeSort === 'normal') {
-            $products = $products
-                ->orderBy($sort);
-        }
-        $products = $products->paginate($limit);
-
-        return ProductResource::collection($products);
-    }
+//    public function getProductsFind(string $name, string $typeSort, string | null $sort, string $limit, string $from, string $to)
+//    {
+//        $products = Product::where('name', 'like', '%' . $name . '%')->whereBetween('price', [$from, $to]);
+//        if ($typeSort === 'reverse'){
+//            $products = $products
+//                ->orderByDesc($sort);
+//        } elseif ($typeSort === 'normal') {
+//            $products = $products
+//                ->orderBy($sort);
+//        }
+//        $products = $products->paginate($limit);
+//
+//        return ProductResource::collection($products);
+//    }
 }
