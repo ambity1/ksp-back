@@ -31,7 +31,7 @@ class ProductController extends Controller
                 ->orderBy($request['sort']);
         }
         $products = $products->paginate($request['limit']);
-        return response()->json([ProductResource::collection($products), 'min' => Product::min('price'), 'max' => Product::max('price')]);
+        return ProductResource::collection($products);
     }
 
     public function getProductsFilterPrice(Request $request){
@@ -64,5 +64,9 @@ class ProductController extends Controller
         $products = Product::inRandomOrder()->limit(4)->get();
 
         return ProductResource::collection($products);
+    }
+
+    public function getMinMaxPrice(){
+        return response()->json(['min'=>Product::min('price'), 'max'=>Product::max('price')]);
     }
 }
