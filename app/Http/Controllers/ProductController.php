@@ -36,8 +36,10 @@ class ProductController extends Controller
 
     public function getProductsFilterPrice(Request $request){
 
-        $products = Product::whereNotNull('price')
-            ->whereBetween('price', [$request['from'], $request['to']]);
+        $products = Product::whereNotNull('price');
+        if ($request['from'] && $request['to']){
+            $products = $products->whereBetween('price', [$request['from'], $request['to']]);
+        }
         if ($request['name']) {
             $products = $products->where('name', 'like', '%' . $request['name'] . '%');
         }
