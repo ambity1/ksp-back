@@ -31,7 +31,7 @@ class ProductController extends Controller
                 ->orderBy($request['sort']);
         }
         $products = $products->paginate($request['limit']);
-        return ProductResource::collection($products);
+        return response()->json([ProductResource::collection($products), 'min' => Product::min('price'), 'max' => Product::max('price')]);
     }
 
     public function getProductsFilterPrice(Request $request){
@@ -49,7 +49,7 @@ class ProductController extends Controller
                 ->orderBy($request['sort']);
         }
         $products = $products->paginate($request['limit']);
-        return ProductResource::collection($products);
+        return response()->json([ProductResource::collection($products), 'min' => Product::min('price'), 'max' => Product::max('price')]);
     }
 
     public function getProductsWithoutPrice()
@@ -65,19 +65,4 @@ class ProductController extends Controller
 
         return ProductResource::collection($products);
     }
-
-//    public function getProductsFind(string $name, string $typeSort, string | null $sort, string $limit, string $from, string $to)
-//    {
-//        $products = Product::where('name', 'like', '%' . $name . '%')->whereBetween('price', [$from, $to]);
-//        if ($typeSort === 'reverse'){
-//            $products = $products
-//                ->orderByDesc($sort);
-//        } elseif ($typeSort === 'normal') {
-//            $products = $products
-//                ->orderBy($sort);
-//        }
-//        $products = $products->paginate($limit);
-//
-//        return ProductResource::collection($products);
-//    }
 }
