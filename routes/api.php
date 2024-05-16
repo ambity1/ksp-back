@@ -27,9 +27,9 @@ Route::any('/1c_exchange', [ExchangeController::class, 'exchange']);
 
 Route::get('/product/{id}', [ProductController::class, 'getProductByID']);
 
-Route::get('/products/{typeSort}/{sort}/{limit}', [ProductController::class, 'getProducts']);
+Route::post('/products/{typeSort}/{sort}/{limit}', [ProductController::class, 'getProducts']);
 
-Route::get('/products/filter/{typeSort}/{sort}/{limit}/{from}/{to}', [ProductController::class, 'getProductsFilterPrice']);
+Route::post('/products/filter/{typeSort}/{sort}/{limit}/{from}/{to}', [ProductController::class, 'getProductsFilterPrice']);
 
 //Route::get('/products/w/p', [ProductController::class, 'getProductsWithoutPrice']);
 
