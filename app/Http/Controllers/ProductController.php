@@ -15,9 +15,13 @@ class ProductController extends Controller
        return new ProductSingleResource(Product::findOrFail($id));
     }
 
-    public function getProducts(string $typeSort, string | null $sort, string $limit)
+    public function getProducts(string $typeSort, string | null $sort, string $limit, string | null $name)
     {
         $products = Product::whereNotNull('price');
+
+        if ($name !== null) {
+            $products = $products->where('name', 'like', '%' . $name . '%');
+        }
         if ($typeSort === 'reverse'){
             $products = $products
                 ->orderByDesc($sort);
@@ -29,9 +33,13 @@ class ProductController extends Controller
         return ProductResource::collection($products);
     }
 
-    public function getProductsFilterPrice(string $typeSort, string | null $sort, string $limit, string $from, string $to){
+    public function getProductsFilterPrice(string $typeSort, string | null $sort, string $limit, string $from, string $to, string | null $name){
+
         $products = Product::whereNotNull('price')
             ->whereBetween('price', [$from, $to]);
+        if ($name !== null) {
+            $products = $products->where('name', 'like', '%' . $name . '%');
+        }
         if ($typeSort === 'reverse'){
             $products = $products
                 ->orderByDesc($sort);
@@ -57,9 +65,17 @@ class ProductController extends Controller
         return ProductResource::collection($products);
     }
 
-    public function getProductsFind(string $name)
+    public function getProductsFind(string $name, string $typeSort, string | null $sort, string $limit, string $from, string $to)
     {
-        $products = Product::where('name', 'like', '%' . $name . '%')->get();
+        $products = Product::where('name', 'like', '%' . $name . '%')->whereBetween('price', [$from, $to]);
+        if ($typeSort === 'reverse'){
+            $products = $products
+                ->orderByDesc($sort);
+        } elseif ($typeSort === 'normal') {
+            $products = $products
+                ->orderBy($sort);
+        }
+        $products = $products->paginate($limit);
 
         return ProductResource::collection($products);
     }

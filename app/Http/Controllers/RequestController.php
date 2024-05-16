@@ -9,8 +9,7 @@ use Log;
 class RequestController extends Controller
 {
     public function requestTG(Request $request){
-        $jsonDATA = $request->json();
-        $number = $jsonDATA->get("number");
+        $number = $request['phone'];
 
         $uriTG = 'https://api.telegram.org/bot';
         $token = '6420278819:AAGc1QWOW0jSI8Ca50JhHnRbxZiWhm6Z1Fc';
