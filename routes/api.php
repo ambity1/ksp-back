@@ -42,4 +42,4 @@ Route::get('/promotions', [PromotionController::class, 'getPromotions']);
 
 
 Route::post('/request', [RequestController::class, 'requestTG']);
-Route::post('/minmax', [ProductController::class, 'getMinMaxPrice']);
+Route::get('/minmax', [ProductController::class, 'getMinMaxPrice']);
