@@ -6,6 +6,7 @@ use App\Http\Resources\ProductResource;
 use App\Http\Resources\ProductSingleResource;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Log;
 
 class ProductController extends Controller
@@ -15,11 +16,11 @@ class ProductController extends Controller
        return new ProductSingleResource(Product::findOrFail($id));
     }
 
-    public function getProducts(string $typeSort, string | null $sort, string $limit, string | null $name)
+    public function getProducts(string $typeSort, string | null $sort, string $limit, Request $request)
     {
         $products = Product::whereNotNull('price');
 
-        if ($name !== null) {
+        if ($request['name'] !== null) {
             $products = $products->where('name', 'like', '%' . $name . '%');
         }
         if ($typeSort === 'reverse'){
@@ -33,11 +34,11 @@ class ProductController extends Controller
         return ProductResource::collection($products);
     }
 
-    public function getProductsFilterPrice(string $typeSort, string | null $sort, string $limit, string $from, string $to, string | null $name){
+    public function getProductsFilterPrice(string $typeSort, string | null $sort, string $limit, string $from, string $to, Request $request){
 
         $products = Product::whereNotNull('price')
             ->whereBetween('price', [$from, $to]);
-        if ($name !== null) {
+        if ($request['name'] !== null) {
             $products = $products->where('name', 'like', '%' . $name . '%');
         }
         if ($typeSort === 'reverse'){
