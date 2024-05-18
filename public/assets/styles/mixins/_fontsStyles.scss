@@ -1,0 +1,31 @@
+@mixin DisplayXL {
+  font-size: 3.75em; //60px - h1
+}
+
+@mixin DisplayLG {
+  font-size: 2.5em; //40px - h2
+}
+
+@mixin DisplayL {
+  font-size: 2.125em; //34px
+}
+
+@mixin DisplayMD {
+  font-size: 1.75em; // 28px - h3
+}
+
+@mixin TextLG {
+  font-size: 1.125em; //18px - h4
+}
+
+@mixin TextMD {
+  font-size: 1em; // 16px - h5 / SmallText
+}
+
+@mixin TextXS {
+  font-size: 0.875em; // 14px - h6 / AdditionalText
+}
+
+@mixin Text2XS {
+  font-size: 0.75em; // 12px
+}
