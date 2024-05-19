@@ -12,12 +12,11 @@
     <meta name="theme-color" content="#ffffff">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>KSP</title>
-    <script type="module" crossorigin src="{{asset('/assets/index-f545efc7.js')}}"></script>
-    <link rel="stylesheet" href="{{asset('/assets/index-41b95f3c.css')}}">
+    <script type="module" crossorigin src="{{asset('/assets/index-85692d4e.js')}}"></script>
+    <link rel="stylesheet" href="{{asset('/assets/index-f72787ac.css')}}">
 </head>
 <body>
 <div id="root"></div>
 
 </body>
 </html>
-
