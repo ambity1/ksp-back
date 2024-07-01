@@ -20,6 +20,7 @@ return new class extends Migration
             $table->text('barcode');
             $table->string('id_1с', 36)->nullable()->index('index_1c');
             $table->string('state')->nullable();
+            $table->string('image')->nullable();
         });
     }
 

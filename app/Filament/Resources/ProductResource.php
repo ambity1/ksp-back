@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ProductResource\Pages;
 use App\Models\Product;
 use Filament\Forms;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -31,7 +32,9 @@ class ProductResource extends Resource
                 TextInput::make('barcode')->label('Штрихкод')->required(),
 
                 TextInput::make('description')->label('Описание')->required(),
-                TextInput::make('id_1с')->label('ID 1С')
+                TextInput::make('id_1с')->label('ID 1С'),
+
+                FileUpload::make('image')->label('Картинка'),
             ]);
     }
 
