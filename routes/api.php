@@ -43,3 +43,6 @@ Route::get('/promotions', [PromotionController::class, 'getPromotions']);
 
 Route::post('/request', [RequestController::class, 'requestTG']);
 Route::get('/minmax', [ProductController::class, 'getMinMaxPrice']);
+
+//Поиск
+Route::get('/search/{pin}', [ProductController::class, 'search']);

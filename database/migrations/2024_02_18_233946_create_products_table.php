@@ -15,12 +15,13 @@ return new class extends Migration
             $table->id();
             $table->text('name');
             $table->text('articulate');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->double('price')->nullable();
-            $table->text('barcode');
+            $table->text('barcode')->nullable();
             $table->string('id_1с', 36)->nullable()->index('index_1c');
             $table->string('state')->nullable();
             $table->string('image')->nullable();
+            $table->timestamps();
         });
     }
 

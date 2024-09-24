@@ -5,12 +5,23 @@ namespace App\Http\Controllers;
 use App\Http\Resources\ProductResource;
 use App\Http\Resources\ProductSingleResource;
 use App\Models\Product;
+use App\Services\Integration\ArmtekService;
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Illuminate\Support\Facades\Log;
 
 class ProductController extends Controller
 {
+    private ArmtekService $armtekService;
+
+    public function __construct(ArmtekService $armtekService)
+    {
+        $this->armtekService = $armtekService;
+    }
+
+    public function search($pin): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+    {
+        return ProductResource::collection($this->armtekService->search($pin));
+    }
+
     public function getProductByID(string $id)
     {
        return new ProductSingleResource(Product::findOrFail($id));
