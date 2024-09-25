@@ -19,7 +19,7 @@ class ProductController extends Controller
 
     public function search($pin): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
     {
-        return ProductResource::collection($this->armtekService->search($pin));
+        return $this->armtekService->search($pin);
     }
 
     public function getProductByID(string $id)
